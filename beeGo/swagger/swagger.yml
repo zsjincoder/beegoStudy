@@ -1,0 +1,162 @@
+swagger: "2.0"
+info:
+  title: beego Test API
+  description: beego has a very cool tools to autogenerate documents for your API
+  version: 1.0.0
+  termsOfService: http://beego.me/
+  contact:
+    email: astaxie@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+basePath: /api
+paths:
+  /student/AddStudents:
+    post:
+      tags:
+      - student
+      description: 批量新增学生信息
+      operationId: StudentController.新增学生信息
+      parameters:
+      - in: body
+        name: studentInfo
+        description: 更新学生数据
+        required: true
+        schema:
+          type: array
+          items:
+            $ref: '#/definitions/models.Student'
+      responses:
+        "200":
+          description: '{code,msg} interface{}'
+        "403":
+          description: list
+  /student/DeleteStudent:
+    get:
+      tags:
+      - student
+      description: 根据条件查询
+      operationId: StudentController.删除学生信息
+      parameters:
+      - in: path
+        name: studentId
+        description: 根据studentId查询
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{code,msg}'
+        "403":
+          description: :studentId is empty
+  /student/GetStudentInfo:
+    get:
+      tags:
+      - student
+      description: 全都学生，单个学生，根据条件查询
+      operationId: StudentController.获取学生信息
+      parameters:
+      - in: path
+        name: studentId
+        description: 根据studentId查询
+        type: string
+      - in: path
+        name: studentName
+        description: 根据studentName查询
+        type: string
+      - in: path
+        name: studentSex
+        description: 根据studentSex查询
+        type: string
+      - in: path
+        name: department
+        description: 根据department查询
+        type: string
+      responses:
+        "200":
+          description: '{code,msg} models.Student'
+        "403":
+          description: :studentId is empty
+  /student/GetStudentScore:
+    get:
+      tags:
+      - student
+      description: 根据条件查询
+      operationId: StudentController.获取学生成绩信息
+      parameters:
+      - in: path
+        name: studentId
+        description: 根据studentId查询
+        type: string
+      responses:
+        "200":
+          description: '{code,msg} interface{}'
+        "403":
+          description: :studentId is empty
+  /student/UpdateStudent:
+    post:
+      tags:
+      - student
+      description: 根据条件查询
+      operationId: StudentController.更新学生信息
+      parameters:
+      - in: body
+        name: studentInfo
+        description: 更新学生数据
+        required: true
+        schema:
+          $ref: '#/definitions/models.Student'
+      responses:
+        "200":
+          description: '{code,msg} interface{}'
+        "403":
+          description: :studentId is empty
+  /user/Login:
+    post:
+      tags:
+      - user
+      description: 根据条件查询
+      operationId: UserController.用户登陆
+      parameters:
+      - in: FormData
+        name: userAccount
+        description: 账号
+        required: true
+        type: string
+      - in: FormData
+        name: passWord
+        description: 加密后的密码
+        required: true
+        type: string
+      - in: FormData
+        name: userName
+        description: 姓名
+        required: true
+        type: string
+      - in: FormData
+        name: sex
+        description: 性别
+        required: true
+        type: string
+      responses:
+        "200":
+          description: '{code,msg} interface{}'
+        "403":
+          description: :valid fail
+definitions:
+  models.Student:
+    title: Student
+    type: object
+    properties:
+      Address:
+        type: string
+      Birth:
+        type: string
+      Department:
+        type: string
+      Id:
+        type: integer
+        format: int64
+      Name:
+        type: string
+      Sex:
+        type: string
